@@ -19,7 +19,7 @@ let renderer;
   scene.add(ambientLight);
 
   const directionalLight = new THREE.DirectionalLight('white', 0.6);
-  directionalLight.position.set(-2, 2, 2);
+  directionalLight.position.set(-2, 3, 2);
   directionalLight.castShadow = true;
   scene.add(directionalLight);
 
@@ -62,6 +62,10 @@ let renderer;
     envMap: textureEquirec,
   });
   const reflective = new THREE.Mesh(refGeometry, refMaterial);
+
+  reflective.castShadow = true;
+  reflective.receiveShadow = true;
+
   reflective.position.set(0, 0, 0);
   scene.add(reflective);
   //#endregion  //*======== Reflective ===========
