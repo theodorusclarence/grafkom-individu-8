@@ -53,7 +53,7 @@ let renderer;
   //#endregion  //*======== Panorama ===========
 
   //#region  //*=========== Reflective ===========
-  const textureEquirec = texture;
+  const textureEquirec = new THREE.TextureLoader().load('images/pier.jpg');
   textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
   textureEquirec.encoding = THREE.sRGBEncoding;
 
