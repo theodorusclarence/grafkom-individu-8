@@ -39,7 +39,7 @@ let renderer;
   );
   camera.position.set(-1, 0, 0);
 
-  //#region  //*=========== Texture ===========
+  //#region  //*=========== Panorama ===========
   const texture = new THREE.TextureLoader().load('images/pier.jpg');
 
   const geometry = new THREE.SphereGeometry(5, 32, 32);
@@ -50,7 +50,21 @@ let renderer;
 
   const sphere = new THREE.Mesh(geometry, material);
   scene.add(sphere);
-  //#endregion  //*======== Texture ===========
+  //#endregion  //*======== Panorama ===========
+
+  //#region  //*=========== Reflective ===========
+  const textureEquirec = texture;
+  textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
+  textureEquirec.encoding = THREE.sRGBEncoding;
+
+  const refGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+  const refMaterial = new THREE.MeshBasicMaterial({
+    envMap: textureEquirec,
+  });
+  const reflective = new THREE.Mesh(refGeometry, refMaterial);
+  reflective.position.set(0, 0, 0);
+  scene.add(reflective);
+  //#endregion  //*======== Reflective ===========
 
   //#region  //*=========== Plane ===========
   const plane = new THREE.Mesh(
