@@ -1,3 +1,7 @@
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
+import { OBJLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/OBJLoader.js';
+
 /** @type {THREE.OrthographicCamera} */
 let camera;
 /** @type {THREE.Scene} */
@@ -80,7 +84,7 @@ let renderer;
   renderer = new THREE.WebGLRenderer({ antialias: true });
 
   //#region  //*=========== Orbit ===========
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.25;
   controls.enableZoom = true;
