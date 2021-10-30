@@ -1,4 +1,3 @@
-import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
 import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
 import { OBJLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/OBJLoader.js';
 
@@ -13,6 +12,7 @@ let renderer;
   // set up three.js scene
   scene = new THREE.Scene();
   scene.background = new THREE.Color('lightGray');
+  scene.fog = new THREE.Fog('lightGray', 5, 200);
 
   //lights
   const ambientLight = new THREE.AmbientLight('white', 0.6);
@@ -54,7 +54,7 @@ let renderer;
 
   //#region  //*=========== Plane ===========
   const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 100, 100, 100),
+    new THREE.PlaneGeometry(8, 8, 100, 100),
     new THREE.MeshPhongMaterial({
       color: '#ffffff',
       transparent: true,
@@ -81,8 +81,19 @@ let renderer;
   scene.add(cube);
   //#endregion  //*======== Create Cube ===========
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  //#region  //*=========== Object ===========
+  const objLoader = new OBJLoader();
+  let eyeball;
+  objLoader.load('obj/stickman.OBJ', (object) => {
+    eyeball = object;
+    object.position.set(0.2, 0, -2.5);
+    object.castShadow = true;
+    object.receiveShadow = true;
+    scene.add(object);
+  });
+  //#endregion  //*======== Object ===========
 
+  renderer = new THREE.WebGLRenderer({ antialias: true });
   //#region  //*=========== Orbit ===========
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -101,6 +112,7 @@ let renderer;
     cube.rotation.x += 0.001;
     cube.rotation.y += 0.001;
     cube.rotation.z += 0.001;
+    if (eyeball) eyeball.rotation.y += 0.01;
     renderer.render(scene, camera);
     requestAnimationFrame(animation);
   }
